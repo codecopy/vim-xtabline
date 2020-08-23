@@ -276,6 +276,29 @@ fun! s:ordered_buffers() abort
 endfun "}}}
 
 
+fun! s:check_arglist_mode() abort
+  " Check if mode must be changed automatically. {{{1
+  if get(s:Sets, 'auto_arglist_mode', 0)
+    if s:v.tabline_mode == 'buffers'
+      let s:v.was_tab_mode = 0
+      return
+    endif
+    if index(argv(), bufname('%')) >= 0
+      if s:v.tabline_mode == 'tabs'
+        let s:v.was_tab_mode = 1
+        let s:v.tabline_mode = 'arglist'
+        call xtabline#update()
+      endif
+    elseif s:v.tabline_mode == 'arglist' && s:v.was_tab_mode
+      let s:v.tabline_mode = 'tabs'
+      call xtabline#update()
+    else
+      let s:v.was_tab_mode = 0
+    endif
+  endif
+endfun "}}}
+
+
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -313,6 +336,7 @@ function! s:Do(action, ...)
 
     call xtabline#tab#recent_buffers(B)
     call xtabline#update()
+    call s:check_arglist_mode()
 
     """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

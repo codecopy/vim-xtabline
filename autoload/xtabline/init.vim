@@ -150,6 +150,7 @@ let s:S.bookmarks_file = expand(s:datadir . '/.XTablineBookmarks')
 
 let g:xtabline_settings  = extend(s:S, get(g:, 'xtabline_settings', {}))
 let g:xtabline.Vars.tabline_mode = g:xtabline_settings.tabline_modes[0]
+let g:xtabline.Vars.was_tab_mode = g:xtabline.Vars.tabline_mode == 'tabs'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Icons

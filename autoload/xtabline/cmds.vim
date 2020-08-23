@@ -29,6 +29,9 @@ fun! xtabline#cmds#select_buffer(cnt) abort
   if s:v.tabline_mode == 'tabs'
     return 'gt'
   elseif s:v.tabline_mode == 'arglist'
+    if get(s:Sets, 'auto_arglist_mode', 0)
+      return 'gt'
+    endif
     let bufs = argv()
     let n = min([a:cnt, len(bufs)-1])
     return ":\<C-U>silent! buffer ".bufs[n]."\<cr>"

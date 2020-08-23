@@ -81,6 +81,9 @@ In *arglist-mode* , the tabline will show the files included in the arglist.
 You can switch file with the usual commands (|:next|, etc). Note that if the
 arglist is empty, this mode won't be available.
 
+This mode can also be enabled automatically when the current buffer is in the
+|argument-list|: see |auto_arglist_mode|.
+
 In *buffers-mode* , the tabline will show a list of the most recently accessed
 buffers (10 by default). This list will be filtered on the base of the current
 tab's CWD, if |buffer_filtering| is active.
@@ -213,6 +216,9 @@ Default is `:buffer #` (go to alternate buffer).
 
 When in |tabs-mode|, [count]<BS> can still be used, and will bring you to the
 N tab (<BS> is an alias for |gt| in this case).
+
+In |args-mode| it will select the N buffer in the |arglist|, as they are ordered
+in the tabline.
 
 ------------------------------------------------------------------------------
 
@@ -473,6 +479,23 @@ informations such as custom tabs labels or pinned buffers.
     let g:xtabline_settings.show_right_corner = 1
 <
 Set this value to 0 to remove the label on the right corner of the tabline.
+
+
+------------------------------------------------- *xtabline-auto_arglist_mode*
+>
+    let g:xtabline_settings.auto_arglist_mode = 0
+<
+Set this value to 1 to enable automatic mode change.
+
+By setting this option, when in |tabs-mode|, entering a buffer that belongs to
+the |argument-list|, the tabline mode switches to |arglist-mode|. The previous
+mode is reenabled when you switch to a buffer that doesn't belong to the list.
+
+Note: in |buffers-mode| this option has no effect.
+
+Note: if this option is enabled, |select-buffer| will behave as in
+|tabs-mode|, to avoid confusion. Use |:next| and |:prev| to switch buffers in
+the |arglist|.
 
 
 ---------------------------------------- *xtabline-tab_number_in_buffers_mode*
